@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
+import StatsTestimonial from './stats_testimonials';
+import QuoteForm from './QuoteForm';
+import CTAButton from './CTAButton';
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isQuoteFormOpen, setIsQuoteFormOpen] = useState(false);
 
   const testimonials = [
     {
@@ -37,9 +41,9 @@ const Testimonials = () => {
     },
     {
       id: 4,
-      name: "Kahwi Leonard",
+      name: "Kawhi Leonard",
       position: "CEO",
-      company: "Assi Consulting",
+      company: "KL2 Consulting",
       image: "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=400",
       rating: 5,
       text: "Une équipe professionnelle qui comprend les enjeux du business en Afrique. Leur approche personnalisée nous a permis de nous démarquer de la concurrence.",
@@ -66,6 +70,10 @@ const Testimonials = () => {
   };
 
   const currentTestimonial = testimonials[currentIndex];
+
+  const handleStartProject = () => {
+    setIsQuoteFormOpen(true);
+  };
 
   return (
     <section id="temoignages" className="py-20 bg-gradient-to-br from-blue-50 to-emerald-50">
@@ -163,25 +171,7 @@ const Testimonials = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-gray-900 mb-2">150+</div>
-            <div className="text-gray-600">Clients satisfaits</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-gray-900 mb-2">95%</div>
-            <div className="text-gray-600">Taux de satisfaction</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-gray-900 mb-2">4.9/5</div>
-            <div className="text-gray-600">Note moyenne</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-gray-900 mb-2">24h</div>
-            <div className="text-gray-600">Temps de réponse</div>
-          </div>
-        </div>
-
+        <StatsTestimonial/>
         {/* CTA */}
         <div className="mt-16 text-center">
           <h3 className="text-2xl font-bold text-gray-900 mb-4">
@@ -190,11 +180,21 @@ const Testimonials = () => {
           <p className="text-gray-600 mb-8">
             Faites confiance à notre expertise pour développer votre activité en ligne.
           </p>
-          <button className="bg-gradient-to-r from-emerald-400 to-emerald-700 text-white px-8 py-4 rounded-lg hover:from-emerald-600 hover:to-emerald-800 transition-all duration-200 transform hover:scale-105 shadow-lg">
+          <CTAButton
+            onClick={handleStartProject}
+            size="lg"
+            showSparkles={true}
+          >
             Commencer mon projet
-          </button>
+          </CTAButton>
         </div>
       </div>
+
+      {/* Quote Form Modal */}
+      <QuoteForm
+        isOpen={isQuoteFormOpen}
+        onClose={() => setIsQuoteFormOpen(false)}
+      />
     </section>
   );
 };

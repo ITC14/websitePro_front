@@ -1,3 +1,4 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Services from './components/Services';
@@ -7,8 +8,11 @@ import Blog from './components/Blog';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import StatsSection from './components/stats_section';
+import ProjectDetail from './components/ProjectDetail';
+import BlogDetail from './components/BlogDetail';
 
-function App() {
+// Composant pour la page d'accueil
+const HomePage = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -21,6 +25,18 @@ function App() {
       <Contact />
       <Footer />
     </div>
+  );
+};
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/project/:id" element={<ProjectDetail />} />
+        <Route path="/blog/:slug" element={<BlogDetail />} />
+      </Routes>
+    </Router>
   );
 }
 

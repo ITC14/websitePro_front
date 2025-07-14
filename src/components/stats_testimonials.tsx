@@ -7,7 +7,7 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-export default function StatsSection() {
+export default function StatsTestimonial() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const yearsRef = useRef<HTMLSpanElement>(null)
   const clientsRef = useRef<HTMLSpanElement>(null)
@@ -17,9 +17,9 @@ export default function StatsSection() {
     const animateCounters = () => {
       // Configuration de l'animation pour chaque compteur
       const counters = [
-        { element: yearsRef.current, end: 12,prefix:"+", suffix: ""  },
-        { element: clientsRef.current, end: 96,prefix:"", suffix: "%" },
-        { element: projectsRef.current, end: 150,prefix:"+", suffix: "" }
+        { element: yearsRef.current, end: 95, prefix: "",suffix:"%" },
+        { element: clientsRef.current, end: 9,prefix: "4.", suffix: "/5" },
+        { element: projectsRef.current, end: 24,prefix: "-", suffix: "h" }
       ]
 
       counters.forEach(counter => {
@@ -61,45 +61,28 @@ export default function StatsSection() {
 function formatValue(value: number, prefix = "", suffix = "") {
   return `${prefix}${Math.floor(value)}${suffix}`;
 }
+
   return (
     <section 
       ref={sectionRef}
-      className="py-16 bg-gradient-to-r from-teal-400 to-green-600 text-black"
+      className="py-6 text-black"
     >
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          {/* Années d'expérience */}
-          <div className="stat-item p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-sm">
-            <span className="text-5xl md:text-6xl font-bold block mb-3">🎓</span>
-            <span 
-              ref={yearsRef}
-              className="text-5xl md:text-6xl font-bold text-teal-700 block mb-3"
-            > 0</span>
-            <h3 className="text-xl font-medium">Années d'expérience</h3>
-            <p className="mt-2 opacity-90">Depuis 2012</p>
-          </div>
+        <div className="grid items-center grid-cols-1 gap-8 text-center">
 
           {/* Clients satisfaits */}
           <div className="stat-item p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-sm">
-            <span className="text-5xl md:text-6xl font-bold block mb-3">🤝</span>
+            <span className="text-3xl md:text-4xl font-bold block mb-3">⭐</span>
             <span 
               ref={clientsRef}
-              className="text-5xl md:text-6xl font-bold text-teal-700 block mb-3"
+              className="text-3xl md:text-4xl font-bold text-teal-700 block mb-3"
             > 0</span>
-            <h3 className="text-xl font-medium">Clients satisfaits</h3>
-            <p className="mt-2 opacity-90">À travers le monde</p>
+            
+            <p className="mt-2 opacity-90">Note Moyenne</p>
           </div>
 
           {/* Projets réalisés */}
-          <div className="stat-item p-8 rounded-xl bg-white bg-opacity-10 backdrop-blur-sm">
-            <span className="text-5xl md:text-6xl font-bold block mb-3">🚀</span>
-            <span 
-              ref={projectsRef}
-              className="text-5xl md:text-6xl font-bold block text-teal-700 mb-3"
-            >0</span>
-            <h3 className="text-xl font-medium">Projets réalisés</h3>
-            <p className="mt-2 opacity-90">Livrés avec succès</p>
-          </div>
+          
         </div>
       </div>
     </section>

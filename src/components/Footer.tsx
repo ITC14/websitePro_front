@@ -1,7 +1,41 @@
+import { useState } from "react";
 import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
 import logo from "../assets/MyLogo_x2A_BV.png";
 
 const Footer = () => {
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterStatus, setNewsletterStatus] = useState("");
+
+  const handleNewsletterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewsletterEmail(e.target.value);
+    setNewsletterStatus("");
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent | React.MouseEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail || !newsletterEmail.includes("@")) {
+      setNewsletterStatus("Veuillez entrer un email valide.");
+      return;
+    }
+    setNewsletterStatus("Envoi en cours...");
+    try {
+      const response = await fetch("http://localhost:3001/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: newsletterEmail }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setNewsletterStatus(data.message || "Merci pour votre inscription !");
+        setNewsletterEmail("");
+      } else {
+        setNewsletterStatus(data.error || "Erreur lors de l'inscription.");
+      }
+    } catch (err) {
+      setNewsletterStatus("Erreur réseau. Veuillez réessayer.");
+    }
+  };
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -137,7 +171,7 @@ const Footer = () => {
             </div>
             
             {/* Newsletter */}
-            <div className="mt-8">
+            <form className="mt-8" onSubmit={handleNewsletterSubmit}>
               <h4 className="font-semibold mb-3">Newsletter</h4>
               <p className="text-gray-300 text-sm mb-4">
                 Recevez nos derniers conseils et actualités.
@@ -147,12 +181,21 @@ const Footer = () => {
                   type="email"
                   placeholder="Votre email"
                   className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-400"
+                  value={newsletterEmail}
+                  onChange={handleNewsletterChange}
+                  required
                 />
-                <button className="bg-teal-600 px-4 py-2 rounded-r-lg hover:bg-green-600 transition-colors">
+                <button
+                  type="submit"
+                  className="bg-teal-600 px-4 py-2 rounded-r-lg hover:bg-green-600 transition-colors"
+                >
                   OK
                 </button>
               </div>
-            </div>
+              {newsletterStatus && (
+                <div className="mt-2 text-sm text-emerald-400">{newsletterStatus}</div>
+              )}
+            </form>
           </div>
         </div>
 

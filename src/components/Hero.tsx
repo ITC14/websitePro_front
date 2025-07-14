@@ -1,6 +1,10 @@
 import { ArrowRight, Play } from 'lucide-react';
+import { useState } from 'react';
+import QuoteForm from './QuoteForm';
 
 const Hero = () => {
+  const [isQuoteFormOpen, setIsQuoteFormOpen] = useState(false);
+
   return (
     <section id="accueil" className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-emerald-50 flex items-center relative overflow-hidden ">
       {/* Background Elements */}
@@ -33,15 +37,21 @@ const Hero = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-gradient-to-r from-emerald-400 to-emerald-700 text-white px-8 py-4 rounded-lg hover:from-emerald-600 hover:to-emerald-800 transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2 group">
+              <button 
+                onClick={() => setIsQuoteFormOpen(true)}
+                className="bg-gradient-to-r from-emerald-400 to-emerald-700 text-white px-8 py-4 rounded-lg hover:from-emerald-600 hover:to-emerald-800 transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2 group"
+              >
                 <span className="font-semibold">Demander un devis</span>
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
               
-              <button className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all duration-200 flex items-center justify-center space-x-2 group">
+              <a 
+                href="#realisations"
+                className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all duration-200 flex items-center justify-center space-x-2 group"
+              >
                 <Play size={20} className="text-teal-600" />
                 <span className="font-semibold">Voir nos réalisations</span>
-              </button>
+              </a>
             </div>
           </div>
           {/* Right Content - Visual */}
@@ -81,6 +91,12 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      
+      {/* Quote Form Modal */}
+      <QuoteForm 
+        isOpen={isQuoteFormOpen} 
+        onClose={() => setIsQuoteFormOpen(false)} 
+      />
     </section>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Phone, Mail, MapPin, Clock, Send, Check } from 'lucide-react';
 
 const Contact = () => {
@@ -7,7 +7,7 @@ const Contact = () => {
     email: '',
     telephone: '',
     entreprise: '',
-    service: '',
+    service: 'audit',
     budget: '',
     message: ''
   });
@@ -26,6 +26,43 @@ const Contact = () => {
       [e.target.name]: e.target.value
     });
   };
+
+  useEffect(() => {
+    const handleAuditRequest = () => {
+      // Pre-fill the form for audit request
+      setFormData(prev => ({
+        ...prev,
+        service: 'audit',
+        message: `Bonjour,
+
+Je souhaite bénéficier d'un audit gratuit de ma présence digitale.
+
+Pouvez-vous analyser :
+- Mon site web actuel (si applicable)
+- Ma présence sur les réseaux sociaux
+- Mon référencement SEO
+- Mes performances marketing
+
+Merci de me contacter pour planifier cet audit.
+
+Cordialement.`
+      }));
+    };
+
+    // Check if audit request was made
+    const auditRequested = localStorage.getItem('auditRequest');
+    if (auditRequested === 'true') {
+      handleAuditRequest();
+      localStorage.removeItem('auditRequest');
+    }
+
+    // Listen for audit request events
+    window.addEventListener('auditRequest', handleAuditRequest);
+
+    return () => {
+      window.removeEventListener('auditRequest', handleAuditRequest);
+    };
+  }, []);
 
   return (
     <section id="contact" className="py-20 bg-white">
@@ -197,6 +234,7 @@ const Contact = () => {
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
                   >
                     <option value="">Sélectionnez un service</option>
+                    <option value="audit">Audit gratuit de présence digitale</option>
                     <option value="site-web">Création de site web</option>
                     <option value="reseaux-sociaux">Gestion des réseaux sociaux</option>
                     <option value="seo">Référencement SEO</option>
